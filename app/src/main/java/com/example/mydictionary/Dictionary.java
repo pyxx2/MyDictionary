@@ -82,48 +82,34 @@ public class Dictionary extends AppCompatActivity implements Runnable{
         }
         int id=0;
         try {
-            Document doc= Jsoup.connect("https://www.huilvzaixian.com/").get();
-            Elements tables=doc.getElementsByTag("ul");
-            String curDateStr = (new SimpleDateFormat("yyyy-MM-dd")).format(new Date());
-            for (Element ulElement : tables) {
-                Elements liElements = ulElement.select("li"); // 在 ul 元素内部选取 li 元素
-                for (Element liElement : liElements) {
-                    if(id!=0) break;
-                    text = liElement.text(); // 获取 li 元素的文本内容
-///                    Log.i(TAG, "run: "+text);
-                    id=1;
-                }
+            Document doc = Jsoup.connect("https://www.englishspeak.com/zh-cn/english-words").get();
+            Element table = doc.select("table.table.table-striped").first();
+            Elements trs = table.select("tbody > tr");
+            for (Element tr : trs) {
+                Element td = tr.child(0); // 获取每个<tr>的第一个<td>
+                String englishWord = td.select("a").text(); // 获取<a>标签的文本
+                String chineseTranslation = td.ownText(); // 获取<td>中除了<a>标签以外的文本
+                Log.i("WordsExtraction", "English: " + englishWord + " => Chinese: " + chineseTranslation);
             }
-            ratemsg=text.split("\\s");//用正则表达式提取出有用信息
 
-
-            //判断当前日期和已经存在的日期是否相等
-            if(curDateStr.equals(logDate)){
-                //如果相等，则不从网络中获取数据
-                Log.i("run","日期相等，不进行更新");
-            }else{
-                Log.i("run","日期不相等，更新");
-                logDate=curDateStr;
-                Log.i(MotionEffect.TAG, "run: date"+logDate);
                 //创建数据，加载到数据库中
-                RateManager rateManager=new RateManager(RateListActivity3.this);
-                RateItem item=new RateItem();
-
-                for(int i=0;i+7<ratemsg.length;i+=3){
-                    String name=ratemsg[i+1];
-                    String rate=ratemsg[i+2];
-                    Log.i(MotionEffect.TAG, "run: "+name+"==>"+rate);
-                    HashMap<String,String>map=new HashMap<>();
-                    map.put("ItemTitle",name);
-                    map.put("ItemDetail",rate);
-                    //放入数据库中
-                    item.setCname(name);
-                    item.setCval(rate);
-                    rateManager.add(item);
-                    Log.i(MotionEffect.TAG, "run: "+map);
-                    listItems.add(map);
-                }
-            }
+//                RateManager rateManager=new RateManager(RateListActivity3.this);
+//                RateItem item=new RateItem();
+//
+//                for(int i=0;i+7<ratemsg.length;i+=3){
+//                    String name=ratemsg[i+1];
+//                    String rate=ratemsg[i+2];
+//                    Log.i(MotionEffect.TAG, "run: "+name+"==>"+rate);
+//                    HashMap<String,String>map=new HashMap<>();
+//                    map.put("ItemTitle",name);
+//                    map.put("ItemDetail",rate);
+//                    //放入数据库中
+//                    item.setCname(name);
+//                    item.setCval(rate);
+//                    rateManager.add(item);
+//                    Log.i(MotionEffect.TAG, "run: "+map);
+//                    listItems.add(map);
+//                }
         }catch (MalformedURLException e){
             e.printStackTrace();
         }catch (IOException e){
@@ -132,7 +118,7 @@ public class Dictionary extends AppCompatActivity implements Runnable{
 
         //发送数据回主线程
         Message msg=handler.obtainMessage(6);
-        msg.obj=listItems;
+        //msg.obj=listItems;
         handler.sendMessage(msg);
         Log.i(MotionEffect.TAG,"run:msg已发送");
     }
