@@ -56,4 +56,22 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.delete("usercart","username=?",new String[]{english});
     }
 
+    public ArrayList<Word> getAllwords() {
+        ArrayList<Word> wordList = new ArrayList<>();
+        // 打开数据库进行查询
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query("dictionary", null, null, null, null, null, null);
+        // 遍历查询结果
+        if (cursor.moveToFirst()) {
+            do {
+                @SuppressLint("Range") String chinese = cursor.getString(cursor.getColumnIndex("chinese"));
+                @SuppressLint("Range") String english = cursor.getString(cursor.getColumnIndex("english"));
+                @SuppressLint("Range") int times = cursor.getInt(cursor.getColumnIndex("times"));
+                Word word = new Word(chinese, english, times);
+                wordList.add(word);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return wordList;
+    }
 }

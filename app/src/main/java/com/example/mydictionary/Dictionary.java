@@ -59,16 +59,25 @@ public class Dictionary extends AppCompatActivity{
         recyclerView = findViewById(R.id.recyclerview2);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         // 从JSON文件加载数据
-        wordList = loadWordsFromJSON(this);
+        wordList = getWordsFromJSON(this);
         // 创建适配器并设置给RecyclerView
         adapter = new MyRecyclerAdapter(wordList);
         recyclerView.setAdapter(adapter);
-        Button button=findViewById(R.id.add);
-        button.setOnClickListener(new View.OnClickListener() {//，不要注册，返回主页面
+        Button button=findViewById(R.id.admin);
+        Button button2=findViewById(R.id.like);
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(Dictionary.this,addWord.class);
+                intent.setClass(Dictionary.this,AdminActivity.class);
+                startActivity(intent);
+            }
+        });
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(Dictionary.this, myLike.class);
                 startActivity(intent);
             }
         });
@@ -79,28 +88,23 @@ public class Dictionary extends AppCompatActivity{
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                // 用户提交搜索时调用
-                Log.i(TAG, "onQueryTextSubmit: 开始搜索" + query);
-                ArrayList<Word> searchResult = databaseHelper.searchWords(query);
-                Log.i(TAG, "onQueryTextSubmit: " + searchResult);
-                // 将搜索结果转换为 ItemData 数组
-                ItemData[] itemsArray = new ItemData[searchResult.size()];
-                for (int i = 0; i < searchResult.size(); i++) {
-                    Word word = searchResult.get(i);
-                    itemsArray[i] = new ItemData(word.getChinese(), word.getEnglish(), word.getTimes());
-                }
-                // 更新 RecyclerView 的数据
-                adapter.updateData(itemsArray);
+                // 用户提交搜索
+                Search(query);
                 return true;
             }
             @Override
             public boolean onQueryTextChange(String newText) {
-                // 如果您希望在用户输入时实时更新搜索结果，也可以在这里调用搜索方法
+                // 用户输入时实时更新搜索结果
+                if(TextUtils.isEmpty(newText)){
+                    getAllWordsFromDatabase();
+                }else{
+                    Search(newText);
+                }
                 return true;
             }
         });
     }
-    public ItemData[] loadWordsFromJSON(Context context) {
+    public ItemData[] getWordsFromJSON(Context context) {
         List<ItemData> itemList = new ArrayList<>();
         try {
             InputStream is = context.getAssets().open("C-E.json");
@@ -128,5 +132,25 @@ public class Dictionary extends AppCompatActivity{
         ItemData[] itemsArray = new ItemData[itemList.size()];
         itemsArray = itemList.toArray(itemsArray);
         return itemsArray;
+    }
+    private void  getAllWordsFromDatabase(){
+        ArrayList<Word>allWords=databaseHelper.getAllwords();
+        for (int i = 0; i < allWords.size(); i++) {
+            Word word = allWords.get(i);
+            Log.i(TAG, "getAllWordsFromDatabase: "+word.getEnglish());
+        }
+        updateRecyclerView(allWords);
+    }
+    private void Search(String query){
+        ArrayList<Word>searchResult=databaseHelper.searchWords(query);
+        updateRecyclerView(searchResult);
+    }
+    private void updateRecyclerView(ArrayList<Word> words) {
+        ItemData[] itemsArray = new ItemData[words.size()];
+        for (int i = 0; i < words.size(); i++) {
+            Word word = words.get(i);
+            itemsArray[i] = new ItemData(word.getChinese(), word.getEnglish(), word.getTimes());
+        }
+        adapter.updateData(itemsArray);
     }
 }

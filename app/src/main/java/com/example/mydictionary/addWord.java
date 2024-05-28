@@ -23,7 +23,7 @@ public class addWord extends AppCompatActivity {
                 @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(addWord.this,Dictionary.class);
+                intent.setClass(addWord.this,AdminActivity.class);
                 startActivity(intent);
             }
         });
