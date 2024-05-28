@@ -52,8 +52,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     }
 
     //删除单词
-    public void deleteCart(String english){
-        db.delete("usercart","username=?",new String[]{english});
+    public void deleteWord(String chinese,String english){
+        db.delete("dictionary","chinese=? AND english=?",new String[]{chinese,english});
     }
 
     public ArrayList<Word> getAllwords() {
