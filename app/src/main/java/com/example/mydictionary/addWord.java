@@ -36,7 +36,7 @@ public class addWord extends AppCompatActivity {
                 String chinese = chi.getText().toString().trim();
                 String english = eng.getText().toString().trim();   //获取输入
                 if(!TextUtils.isEmpty(chinese)&&!TextUtils.isEmpty(english)){
-                        mSQlite.add(chinese,english);
+                        mSQlite.add(chinese,english,0);
                         Intent intent = new Intent();
                         Toast.makeText(addWord.this,"已成功添加",Toast.LENGTH_SHORT).show();
                         intent.setClass(addWord.this,Dictionary.class);

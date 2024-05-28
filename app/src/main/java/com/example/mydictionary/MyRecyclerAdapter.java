@@ -17,7 +17,6 @@ import java.util.Arrays;
 public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.ViewHolder>  {
 
     private ItemData[] listdata;
-    private MyDatabaseHelper mSQlite;
     public MyRecyclerAdapter(ItemData[] listdata) {
         this.listdata = listdata;
     }
@@ -54,6 +53,11 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
             this.ew = (TextView) itemView.findViewById(R.id.ew);
             this.times=(TextView) itemView.findViewById(R.id.times);
         }
+    }
+    // 添加一个新的方法来更新数据
+    public void updateData(ItemData[] newData) {
+        this.listdata = newData;
+        notifyDataSetChanged(); // 通知适配器数据集已更改
     }
 }
 
