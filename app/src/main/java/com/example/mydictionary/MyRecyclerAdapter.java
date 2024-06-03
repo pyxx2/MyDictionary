@@ -41,7 +41,6 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
         final ItemData itemData = listdata[position];
         holder.cw.setText(itemData.getChinese());
         holder.ew.setText(itemData.getEnglish());
-        holder.times.setText(String.valueOf(itemData.getTimes()));
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -50,8 +49,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
                 final String english=itemData.getChinese();
                 final String chinese=itemData.getEnglish();
                 Log.i(TAG, "onClick: "+chinese+"###"+english);
-                final int times=itemData.getTimes();
-                if(MainActivity.flag==1){
+                if(MainActivity.flag==1 && MainActivity.dellike==false){//删除主页的单词
                     //删除数据库里面的数据
                     mSQlite.deleteWord(chinese, english);
                     holder.linearLayout.animate()
@@ -67,10 +65,32 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
                             })
                             .start();
                 }
-                if (MainActivity.flag==0) {//收藏模式
+                if (MainActivity.flag==0 && MainActivity.dellike==false) {//必须在主页的收藏模式添加单词
                     //添加单词至收藏库
-                    mSQlite.add2(english,chinese,times);
-                    Toast.makeText(view.getContext(), "已成功收藏单词", Toast.LENGTH_SHORT).show();
+                    if(!mSQlite.checkMyWord(english)){
+                        Log.i(TAG, "onClick: "+english);
+                        mSQlite.add2(chinese,english);
+                        Toast.makeText(view.getContext(), "已成功收藏单词", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(view.getContext(), "请勿重复收藏", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+                if(MainActivity.dellike==true){
+                    //删除收藏数据库里面的数据
+                    mSQlite.deleteMyLike(chinese, english);
+                    holder.linearLayout.animate()
+                            .alpha(0.0f)
+                            .setDuration(300)
+                            .withEndAction(new Runnable() {
+                                @Override
+                                public void run() {
+                                    // 动画完成后移除条目
+                                    removeItem(holder.getAdapterPosition());
+                                    Toast.makeText(view.getContext(), "已删除", Toast.LENGTH_SHORT).show();
+                                }
+                            })
+                            .start();
                 }
             }
         });
@@ -83,13 +103,11 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView cw;
         public TextView ew;
-        public TextView times;
         public LinearLayout linearLayout;
         public ViewHolder(View itemView) {
             super(itemView);
             this.cw = (TextView) itemView.findViewById(R.id.cw);
             this.ew = (TextView) itemView.findViewById(R.id.ew);
-            this.times=(TextView) itemView.findViewById(R.id.times);
             this.linearLayout = itemView.findViewById(R.id.relativeLayout);
         }
     }

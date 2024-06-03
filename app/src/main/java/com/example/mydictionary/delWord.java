@@ -95,7 +95,7 @@ public class delWord extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         for (int i = 0; i < words.size(); i++) {
             Word word = words.get(i);
-            itemsArray[i] = new ItemData(word.getChinese(), word.getEnglish(), word.getTimes());
+            itemsArray[i] = new ItemData(word.getChinese(), word.getEnglish());
             Log.i(TAG, "updateRecyclerView: "+word.getEnglish());
         }
         adapter.updateData(itemsArray);

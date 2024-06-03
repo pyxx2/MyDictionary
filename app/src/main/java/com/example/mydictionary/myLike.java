@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -43,6 +44,7 @@ public class myLike extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
+                MainActivity.dellike=false;//退出收藏一定要关闭
                 intent.setClass(myLike.this,Dictionary.class);
                 startActivity(intent);
             }
@@ -54,15 +56,14 @@ public class myLike extends AppCompatActivity {
             Word word = allWords.get(i);
             Log.i(TAG, "getAllWordsFromDatabase: "+word.getEnglish());
         }
-        ArrayList<Word> wordList = allWords; // 您的ArrayList
+        ArrayList<Word> wordList = allWords;
         ItemData[] itemsArray = new ItemData[wordList.size()];
-
+        //手动转换类型
         for (int i = 0; i < allWords.size(); i++) {
             Word word = allWords.get(i);
-            // 假设 ItemData 有一个接受 Word 对象的构造函数
-            itemsArray[i] = new ItemData(word.getChinese(), word.getEnglish(), word.getTimes());
+            Log.i(TAG, "getMyWords: "+word.getEnglish()+word.getChinese());
+            itemsArray[i] = new ItemData(word.getChinese(), word.getEnglish());
         }
-        // 现在 itemsArray 包含了 ItemData 对象
         updateRecyclerView(allWords);
         return itemsArray;
     }
@@ -70,8 +71,9 @@ public class myLike extends AppCompatActivity {
         ItemData[] itemsArray = new ItemData[words.size()];
         for (int i = 0; i < words.size(); i++) {
             Word word = words.get(i);
-            itemsArray[i] = new ItemData(word.getChinese(), word.getEnglish(), word.getTimes());
+            itemsArray[i] = new ItemData(word.getChinese(), word.getEnglish());
         }
         adapter.updateData(itemsArray);
     }
+
 }

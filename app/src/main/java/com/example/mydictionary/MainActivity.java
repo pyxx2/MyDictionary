@@ -11,6 +11,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     public static int flag=0;//0为收藏模式，1为delete模式
+    public static boolean dellike=false;//true为删除收藏，false无事发生
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -3,21 +3,10 @@ package com.example.mydictionary;
 public class Word {
     String chinese;
     String english;
-    int times;
-
-    public int getTimes() {
-        return times;
-    }
-
-    public void setTimes(int times) {
-        this.times = times;
-    }
-
-    public Word(String english, String chinese,int times){
+    public Word(String english, String chinese){
         super();
         this.chinese=chinese;
         this.english=english;
-        this.times=times;
     }
     public String getChinese() {
         return chinese;
@@ -38,7 +27,6 @@ public class Word {
         return "Word{" +
                 "chinese='" + chinese + '\'' +
                 ", english='" + english + '\'' +
-                ", times=" + times +
                 '}';
     }
 

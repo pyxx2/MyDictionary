@@ -3,12 +3,10 @@ package com.example.mydictionary;
 public class ItemData {
     String chinese;
     String english;
-    int times;
 
-    public ItemData(String chinese, String english, int times) {
+    public ItemData(String chinese, String english) {
         this.chinese = chinese;
         this.english = english;
-        this.times=times;
     }
 
     public String getChinese() {
@@ -27,11 +25,4 @@ public class ItemData {
         this.english = english;
     }
 
-    public int getTimes() {
-        return times;
-    }
-
-    public void setTimes(int times) {
-        this.times = times;
-    }
 }

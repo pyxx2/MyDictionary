@@ -25,7 +25,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview2"
             android:layout_width="match_parent"
-            android:layout_height="630dp"
+            android:layout_height="match_parent"
             android:layout_weight="9.5"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -36,32 +36,29 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="53dp"
+        android:layout_height="20dp"
         android:layout_gravity="center"
         android:layout_weight="0.5"
         android:gravity="center"
         android:orientation="horizontal">
 
-        <Button
+        <ImageButton
             android:id="@+id/like"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="64dp"
+            android:layout_height="54dp"
             android:layout_gravity="center"
-            android:background="@drawable/round_corner"
+            android:layout_marginRight="120dp"
+            android:background="@drawable/like"
             android:gravity="center"
-            android:text="我的收藏"
-            android:textColor="#ffffff"
-            android:textSize="20dp" />
+            android:scaleType="centerCrop" />
 
-        <Button
+        <ImageButton
             android:id="@+id/admin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="54dp"
             android:layout_gravity="center"
-            android:background="@drawable/round_corner"
+            android:background="@drawable/admin"
             android:gravity="center"
-            android:text="管理模式"
-            android:textColor="#ffffff"
-            android:textSize="20dp" />
+            android:scaleType="centerCrop" />
     </LinearLayout>
 </LinearLayout>

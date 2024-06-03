@@ -26,7 +26,7 @@ public class JsonUtils {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 String chinese = jsonObject.getString("chinese");
                 String english = jsonObject.getString("english");
-                Word word = new Word(chinese, english,0);
+                Word word = new Word(chinese, english);
                 wordList.add(word);
             }
         } catch (IOException | JSONException e) {

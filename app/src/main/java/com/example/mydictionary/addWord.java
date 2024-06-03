@@ -36,12 +36,17 @@ public class addWord extends AppCompatActivity {
                 String chinese = chi.getText().toString().trim();
                 String english = eng.getText().toString().trim();   //获取输入
                 if(!TextUtils.isEmpty(chinese)&&!TextUtils.isEmpty(english)){
-                        mSQlite.add(chinese,english,0);
+                    if(!mSQlite.checkWordExists(english)){
+                        mSQlite.add(chinese,english);
                         Intent intent = new Intent();
                         Toast.makeText(addWord.this,"已成功添加",Toast.LENGTH_SHORT).show();
                         intent.setClass(addWord.this,Dictionary.class);
                         startActivity(intent);
                         finish();
+                    }else {
+                        Toast.makeText(addWord.this,"请勿重复添加",Toast.LENGTH_SHORT).show();
+                    }
+
                 }else {Toast.makeText(addWord.this,"信息不完备，添加失败",Toast.LENGTH_SHORT).show();}
             }
         });
