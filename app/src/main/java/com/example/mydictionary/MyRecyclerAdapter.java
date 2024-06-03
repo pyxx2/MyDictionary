@@ -51,6 +51,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
                 final String chinese=itemData.getEnglish();
                 Log.i(TAG, "onClick: "+chinese+"###"+english);
                 final int times=itemData.getTimes();
+                if(MainActivity.flag==1){
                     //删除数据库里面的数据
                     mSQlite.deleteWord(chinese, english);
                     holder.linearLayout.animate()
@@ -65,6 +66,12 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
                                 }
                             })
                             .start();
+                }
+                if (MainActivity.flag==0) {//收藏模式
+                    //添加单词至收藏库
+                    mSQlite.add2(english,chinese,times);
+                    Toast.makeText(view.getContext(), "已成功收藏单词", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

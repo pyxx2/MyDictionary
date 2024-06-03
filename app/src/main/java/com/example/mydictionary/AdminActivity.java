@@ -15,7 +15,6 @@ public class AdminActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin);
         Button button=findViewById(R.id.add);
         Button button2=findViewById(R.id.delete);
-        Button button3=findViewById(R.id.modify);
         Button button4=findViewById(R.id.back);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -25,19 +24,13 @@ public class AdminActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        //删除操作
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
+                MainActivity.flag=1;
                 intent.setClass(AdminActivity.this, delWord.class);
-                startActivity(intent);
-            }
-        });
-        button3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(AdminActivity.this, modWord.class);
                 startActivity(intent);
             }
         });

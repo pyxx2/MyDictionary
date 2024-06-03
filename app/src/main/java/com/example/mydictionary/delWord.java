@@ -41,6 +41,7 @@ public class delWord extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
+                MainActivity.flag=0;
                 intent.setClass(delWord.this, AdminActivity.class);
                 startActivity(intent);
             }
