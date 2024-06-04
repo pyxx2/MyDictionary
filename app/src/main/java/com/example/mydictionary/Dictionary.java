@@ -60,9 +60,9 @@ public class Dictionary extends AppCompatActivity{
         recyclerView = findViewById(R.id.recyclerview2);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         // 从JSON文件加载数据
-        //wordList = getWordsFromJSON(this);
+        wordList = getWordsFromJSON(this);
         // 创建适配器并设置给RecyclerView
-        adapter = new MyRecyclerAdapter(new ItemData[0]);
+        adapter = new MyRecyclerAdapter(wordList);
         recyclerView.setAdapter(adapter);
         //加载数据
         getAllWordsFromDatabase();
@@ -109,34 +109,34 @@ public class Dictionary extends AppCompatActivity{
             }
         });
     }
-//    public ItemData[] getWordsFromJSON(Context context) {
-//        List<ItemData> itemList = new ArrayList<>();
-//        try {
-//            InputStream is = context.getAssets().open("C-E.json");
-//            int size = is.available();
-//            byte[] buffer = new byte[size];
-//            is.read(buffer);
-//            is.close();
-//            String json = new String(buffer, "UTF-8");
-//            JSONArray jsonArray = new JSONArray(json);
-//            for (int i = 0; i < jsonArray.length(); i++) {
-//                JSONObject jsonObject = jsonArray.getJSONObject(i);
-//                String chinese = jsonObject.getString("chinese");
-//                String english = jsonObject.getString("english");
-//                // 检查单词是否已存在于数据库中
-//                if (!databaseHelper.checkWordExists(english)) {
-//                    databaseHelper.add(chinese, english);
-//                }
-//                ItemData itemData = new ItemData(english, chinese);
-//                itemList.add(itemData);
-//            }
-//        } catch (IOException | JSONException e) {
-//            e.printStackTrace();
-//        }
-//        ItemData[] itemsArray = new ItemData[itemList.size()];
-//        itemsArray = itemList.toArray(itemsArray);
-//        return itemsArray;
-//    }
+    public ItemData[] getWordsFromJSON(Context context) {
+        List<ItemData> itemList = new ArrayList<>();
+        try {
+            InputStream is = context.getAssets().open("C-E.json");
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            String json = new String(buffer, "UTF-8");
+            JSONArray jsonArray = new JSONArray(json);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                String chinese = jsonObject.getString("chinese");
+                String english = jsonObject.getString("english");
+                // 检查单词是否已存在于数据库中
+                if (!databaseHelper.checkWordExists(english)) {
+                    databaseHelper.add(chinese, english);
+                }
+                ItemData itemData = new ItemData(english, chinese);
+                itemList.add(itemData);
+            }
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+        ItemData[] itemsArray = new ItemData[itemList.size()];
+        itemsArray = itemList.toArray(itemsArray);
+        return itemsArray;
+    }
     private void  getAllWordsFromDatabase(){
         ArrayList<Word>allWords=databaseHelper.getAllwords();
         for (int i = 0; i < allWords.size(); i++) {
