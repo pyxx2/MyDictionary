@@ -122,7 +122,7 @@ public class Dictionary extends AppCompatActivity{
     public ItemData[] getWordsFromJSON(Context context) {
         List<ItemData> itemList = new ArrayList<>();
         try {
-            InputStream is = context.getAssets().open("C-E.json");
+            InputStream is = context.getAssets().open("C-E3.json");
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);
@@ -151,7 +151,7 @@ public class Dictionary extends AppCompatActivity{
         ArrayList<Word>allWords=databaseHelper.getAllwords();
         for (int i = 0; i < allWords.size(); i++) {
             Word word = allWords.get(i);
-            Log.i(TAG, "getAllWordsFromDatabase: "+word.getEnglish());
+//            Log.i(TAG, "getAllWordsFromDatabase: "+word.getEnglish());
         }
         updateRecyclerView(allWords);
     }
