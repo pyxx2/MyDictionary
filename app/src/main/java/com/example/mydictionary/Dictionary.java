@@ -69,6 +69,7 @@ public class Dictionary extends AppCompatActivity{
 
         ImageButton button=findViewById(R.id.like);
         ImageButton button2=findViewById(R.id.admin);
+        ImageButton button3=findViewById(R.id.home);
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,6 +84,15 @@ public class Dictionary extends AppCompatActivity{
                 Intent intent = new Intent();
                 MainActivity.dellike=true;
                 intent.setClass(Dictionary.this, myLike.class);
+                startActivity(intent);
+            }
+        });
+        button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                MainActivity.dellike=true;
+                intent.setClass(Dictionary.this, MainActivity.class);
                 startActivity(intent);
             }
         });

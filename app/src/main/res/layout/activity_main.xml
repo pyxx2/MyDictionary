@@ -43,6 +43,27 @@
             android:gravity="center"
             android:textSize="30dp"
             android:text="开始使用" />
+
+        <TextView
+            android:id="@+id/sentence"
+            android:layout_marginTop="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="#7B5EFF"
+            android:textSize="30dp"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/sentence2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="#7B5EFF"
+            android:gravity="center"
+            android:textSize="30dp"
+            android:text="TextView" />
     </LinearLayout>
 
 
