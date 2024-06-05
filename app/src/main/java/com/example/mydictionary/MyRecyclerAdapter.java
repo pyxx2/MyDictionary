@@ -111,7 +111,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
             this.linearLayout = itemView.findViewById(R.id.relativeLayout);
         }
     }
-    // 添加一个新的方法来更新数据
+    // 更新数据
     public void updateData(ItemData[] newData) {
         this.listdata = newData;
         notifyDataSetChanged(); // 通知适配器数据集已更改
