@@ -70,11 +70,7 @@ public class MainActivity extends AppCompatActivity implements Runnable{
     @Override
     public void run() {
         Log.i(TAG, "run: run()......");
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+
         int id = 0;
         try {
             Document doc = Jsoup.connect("https://www.klceducation.edu.my/zh-hans/news-feed/article/share/20-positive-english-sentences#:~:text=%E4%B8%BA%E4%BA%86%E8%AE%A9%E4%BD%A0%E6%B0%B8%E8%BF%9C%E9%83%BD%E5%85%83%E6%B0%94%E6%BB%A1%E6%BB%A1%E7%9A%84%EF%BC%8C%E5%B0%8F%E7%BC%96%E4%B8%BA%E4%BD%A0%E5%87%86%E5%A4%87%E4%BA%8620%E4%B8%AA%E6%AD%A3%E8%83%BD%E9%87%8F%E8%8B%B1%E8%AF%AD%E5%8F%A5%E5%AD%90%EF%BC%8C%E8%AE%A9%E4%BD%A0%E5%9C%A8%E9%81%87%E5%88%B0%E6%8C%AB%E6%8A%98%E6%97%B6%E8%83%BD%E5%8F%8A%E6%97%B6%E8%87%AA%E6%88%91%E9%BC%93%E5%8A%B1%E3%80%82%20Just%20pull%20yourself%20together%20%E6%89%93%E8%B5%B7%E7%82%B9%E7%B2%BE%E7%A5%9E%E6%9D%A5%20Every%20day,I%20am%20a%20happy-go-luck%20kind%20of%20guy%20%E6%88%91%E6%98%AF%E4%B8%80%E4%B8%AA%E4%B9%90%E5%A4%A9%E6%B4%BE").get();
